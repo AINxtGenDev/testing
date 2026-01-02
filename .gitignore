@@ -1,2 +1,8 @@
 # Auto Claude data directory
 .auto-claude/
+
+# Emscripten SDK (install locally)
+emsdk/
+
+# Compiled binaries
+power_calc

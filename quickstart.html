@@ -653,6 +653,7 @@
         <a href="#requirements" class="nav-tab active">Requirements</a>
         <a href="#install" class="nav-tab">Install</a>
         <a href="#quickstart" class="nav-tab">Quick Start</a>
+        <a href="#planning" class="nav-tab">Planning Tasks</a>
         <a href="#features" class="nav-tab">Features</a>
         <a href="#config" class="nav-tab">Config</a>
         <a href="#cli" class="nav-tab">CLI</a>
@@ -820,6 +821,155 @@
                 <div class="tip-content">
                     <strong>You're All Set!</strong>
                     The AI agents will plan, implement, and validate your code. You can run up to 12 parallel agent terminals for maximum productivity.
+                </div>
+            </div>
+        </section>
+
+        <!-- Planning Tasks Section -->
+        <section id="planning" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-2);">📝</div>
+                <h2 class="section-title">Planning Tasks Tutorial</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem;">Example Task: Adding a Feature</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Let's walk through creating a task to add functionality to your program:</p>
+                <div class="code-block">
+                    <code><span class="string">"Add another positive integer to my program"</span></code>
+                </div>
+            </div>
+
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.2rem;">Step-by-Step: Creating a Planning Task</h3>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-1);">1</div>
+                <div class="step-content">
+                    <h3>Open the Kanban Board</h3>
+                    <p>Navigate to the Kanban board view in Auto-Claude UI. This is your central hub for task management where you can see all tasks organized by status.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-2);">2</div>
+                <div class="step-content">
+                    <h3>Create New Task</h3>
+                    <p>Click the <strong>"+ New Task"</strong> or <strong>"Add Task"</strong> button. A dialog will appear where you can enter your task description.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-3);">3</div>
+                <div class="step-content">
+                    <h3>Enter Task Description</h3>
+                    <p>Type your task in natural language: <code>"Add another positive integer to my program"</code>. Be specific about what you want - the AI uses this to generate the implementation plan.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-4);">4</div>
+                <div class="step-content">
+                    <h3>Click Start / Submit</h3>
+                    <p>Press the <strong>"Start"</strong> button to begin. Auto-Claude will analyze your codebase, create a specification, and generate an implementation plan with subtasks.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-5);">5</div>
+                <div class="step-content">
+                    <h3>Monitor Agent Progress</h3>
+                    <p>Watch the agent terminals as they work through each subtask. The Kanban board will update in real-time showing progress from "Planning" to "In Progress" to "Complete".</p>
+                </div>
+            </div>
+
+            <!-- Error Handling Section -->
+            <div style="margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem; font-size: 1.2rem; display: flex; align-items: center; gap: 0.5rem;">
+                    <span style="color: var(--error);">⚠️</span> Handling "Task Incomplete" Error
+                </h3>
+            </div>
+
+            <div class="card" style="border-left: 4px solid var(--error);">
+                <h3 style="margin-bottom: 0.75rem; color: var(--error);">Error Message</h3>
+                <div class="code-block" style="background: rgba(245, 87, 108, 0.1); border-color: var(--error);">
+                    <code style="color: var(--text-primary);"><span style="color: var(--error); font-weight: 600;">Task Incomplete</span>
+
+This task has a spec and implementation plan but never
+completed any subtasks (0/0). The process likely crashed
+during spec creation.
+
+<span style="color: var(--accent);">Click Resume to continue implementation.</span></code>
+                </div>
+            </div>
+
+            <div class="tip-box warning">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <strong>Why Does This Happen?</strong>
+                    This error occurs when the agent process crashes or is interrupted during the specification creation phase - before any subtasks could be executed.
+                </div>
+            </div>
+
+            <h3 style="margin: 1.5rem 0 1rem; font-size: 1.2rem;">Step-by-Step: Resuming an Incomplete Task</h3>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-3);">1</div>
+                <div class="step-content">
+                    <h3>Locate the Failed Task</h3>
+                    <p>Find the task on your Kanban board - it will be marked with an error indicator or shown in a "Failed" / "Incomplete" column.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-4);">2</div>
+                <div class="step-content">
+                    <h3>Click on the Task Card</h3>
+                    <p>Select the incomplete task to open its detail view. You'll see the error message and the <strong>"Resume"</strong> button.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-5);">3</div>
+                <div class="step-content">
+                    <h3>Click the "Resume" Button</h3>
+                    <p>Press <strong>"Resume"</strong> to restart the implementation process. Auto-Claude will pick up where it left off, using the existing spec and plan.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-1);">4</div>
+                <div class="step-content">
+                    <h3>Agent Restarts Execution</h3>
+                    <p>A new agent terminal will spawn and begin executing the subtasks. The task status will change to "In Progress".</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-2);">5</div>
+                <div class="step-content">
+                    <h3>Monitor Until Completion</h3>
+                    <p>Watch the progress in the agent terminal. Once all subtasks complete, the task moves to "Done" and you can review the changes.</p>
+                </div>
+            </div>
+
+            <div class="tip-box success">
+                <span class="tip-icon">✅</span>
+                <div class="tip-content">
+                    <strong>Pro Tips for Avoiding Crashes</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.2rem; color: var(--text-secondary);">
+                        <li>Ensure stable internet connection during task execution</li>
+                        <li>Don't close the app while agents are working</li>
+                        <li>Keep system resources available (RAM, CPU)</li>
+                        <li>For large tasks, break them into smaller subtasks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="tip-box info">
+                <span class="tip-icon">🔄</span>
+                <div class="tip-content">
+                    <strong>Alternative: Delete and Recreate</strong>
+                    If Resume doesn't work, you can delete the incomplete task and create a new one with the same description. The AI will generate a fresh spec and plan.
                 </div>
             </div>
         </section>

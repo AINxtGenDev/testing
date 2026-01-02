@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-Claude UI - Quickstart Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-4: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --gradient-5: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --gradient-6: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --dark-bg: #0f0f1a;
+            --card-bg: #1a1a2e;
+            --card-hover: #252542;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --accent: #667eea;
+            --success: #43e97b;
+            --warning: #fee140;
+            --error: #f5576c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-1);
+            padding: 3rem 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            background: var(--card-bg);
+            padding: 0.5rem;
+            gap: 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            flex-shrink: 0;
+            padding: 0.7rem 1.2rem;
+            border-radius: 10px;
+            background: transparent;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover, .nav-tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Section Styles */
+        section {
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            background: var(--card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Step Cards */
+        .step-card {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-content p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Requirements Grid */
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .requirement-item {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .requirement-item:hover {
+            border-color: var(--accent);
+            transform: scale(1.02);
+        }
+
+        .requirement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .requirement-version {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: #0d0d15;
+            border-radius: 12px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Monaco', monospace;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        .code-block code {
+            color: #e0e0e0;
+            white-space: pre;
+        }
+
+        .code-block .comment {
+            color: #6a9955;
+        }
+
+        .code-block .command {
+            color: #4fc3f7;
+        }
+
+        .code-block .string {
+            color: #ce9178;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 600px) {
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: transparent;
+            background: var(--card-hover);
+        }
+
+        .feature-card.highlight {
+            background: var(--gradient-1);
+            border: none;
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .feature-card.highlight .feature-desc {
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* Download Buttons */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .download-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1.5rem 1rem;
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn.windows { background: var(--gradient-3); }
+        .download-btn.macos { background: var(--gradient-1); }
+        .download-btn.linux { background: var(--gradient-4); }
+
+        .download-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+
+        .download-btn .os-icon {
+            font-size: 2.5rem;
+        }
+
+        .download-btn .os-name {
+            font-size: 1rem;
+        }
+
+        .download-btn .os-version {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* Config Table */
+        .config-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .config-table th,
+        .config-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .config-table th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .config-table .var-name {
+            font-family: 'Fira Code', monospace;
+            color: #4fc3f7;
+            font-size: 0.85rem;
+        }
+
+        .config-table .required {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .config-table .required.yes {
+            background: rgba(245, 87, 108, 0.2);
+            color: var(--error);
+        }
+
+        .config-table .required.no {
+            background: rgba(67, 233, 123, 0.2);
+            color: var(--success);
+        }
+
+        /* Tip Boxes */
+        .tip-box {
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            margin: 1rem 0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .tip-box.info {
+            background: rgba(79, 195, 247, 0.1);
+            border-left: 4px solid #4fc3f7;
+        }
+
+        .tip-box.warning {
+            background: rgba(254, 225, 64, 0.1);
+            border-left: 4px solid var(--warning);
+        }
+
+        .tip-box.success {
+            background: rgba(67, 233, 123, 0.1);
+            border-left: 4px solid var(--success);
+        }
+
+        .tip-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            font-size: 0.9rem;
+        }
+
+        .tip-content strong {
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            margin: 2rem 0;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-4);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--card-bg);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .footer-copyright {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .hero {
+                padding: 4rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .container {
+                padding: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .config-table {
+                display: table;
+            }
+        }
+
+        /* Mobile Config Table */
+        @media (max-width: 600px) {
+            .config-table,
+            .config-table tbody,
+            .config-table tr,
+            .config-table td {
+                display: block;
+            }
+
+            .config-table thead {
+                display: none;
+            }
+
+            .config-table tr {
+                margin-bottom: 1rem;
+                background: rgba(255,255,255,0.02);
+                border-radius: 8px;
+                padding: 1rem;
+            }
+
+            .config-table td {
+                padding: 0.5rem 0;
+                border: none;
+            }
+
+            .config-table td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.75rem;
+                color: var(--text-secondary);
+                text-transform: uppercase;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+        /* Scroll Smooth */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--card-bg);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="logo">🤖</div>
+            <h1>Auto-Claude UI</h1>
+            <p class="subtitle">Autonomous multi-agent coding framework that plans, builds, and validates your code automatically</p>
+            <span class="version-badge">v2.7.1 Stable</span>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav-tabs">
+        <a href="#requirements" class="nav-tab active">Requirements</a>
+        <a href="#install" class="nav-tab">Install</a>
+        <a href="#quickstart" class="nav-tab">Quick Start</a>
+        <a href="#features" class="nav-tab">Features</a>
+        <a href="#config" class="nav-tab">Config</a>
+        <a href="#cli" class="nav-tab">CLI</a>
+    </nav>
+
+    <main class="container">
+        <!-- Requirements Section -->
+        <section id="requirements" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-2);">📋</div>
+                <h2 class="section-title">System Requirements</h2>
+            </div>
+
+            <div class="requirements-grid">
+                <div class="requirement-item">
+                    <div class="requirement-icon">🔑</div>
+                    <div class="requirement-name">Claude Pro/Max</div>
+                    <div class="requirement-version">Subscription Required</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-icon">💻</div>
+                    <div class="requirement-name">Claude Code CLI</div>
+                    <div class="requirement-version">via npm</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-icon">📁</div>
+                    <div class="requirement-name">Git Repository</div>
+                    <div class="requirement-version">Initialized</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-icon">🐍</div>
+                    <div class="requirement-name">Python</div>
+                    <div class="requirement-version">3.12+</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-icon">📦</div>
+                    <div class="requirement-name">Node.js</div>
+                    <div class="requirement-version">24+ (for dev)</div>
+                </div>
+                <div class="requirement-item">
+                    <div class="requirement-icon">🔧</div>
+                    <div class="requirement-name">npm</div>
+                    <div class="requirement-version">10+ (for dev)</div>
+                </div>
+            </div>
+
+            <div class="tip-box info">
+                <span class="tip-icon">💡</span>
+                <div class="tip-content">
+                    <strong>Pro Tip</strong>
+                    Install Claude Code CLI globally with: <code>npm install -g @anthropic-ai/claude-code</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section id="install" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-3);">⬇️</div>
+                <h2 class="section-title">Download & Install</h2>
+            </div>
+
+            <div class="download-grid">
+                <a href="https://github.com/AndyMik90/Auto-Claude/releases" class="download-btn windows">
+                    <span class="os-icon">🪟</span>
+                    <span class="os-name">Windows</span>
+                    <span class="os-version">.exe installer</span>
+                </a>
+                <a href="https://github.com/AndyMik90/Auto-Claude/releases" class="download-btn macos">
+                    <span class="os-icon">🍎</span>
+                    <span class="os-name">macOS</span>
+                    <span class="os-version">Intel & Apple Silicon</span>
+                </a>
+                <a href="https://github.com/AndyMik90/Auto-Claude/releases" class="download-btn linux">
+                    <span class="os-icon">🐧</span>
+                    <span class="os-name">Linux</span>
+                    <span class="os-version">AppImage / .deb</span>
+                </a>
+            </div>
+
+            <div class="card" style="margin-top: 1.5rem;">
+                <h3 style="margin-bottom: 1rem;">📦 Build from Source</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code><span class="comment"># Clone the repository</span>
+<span class="command">git clone</span> https://github.com/AndyMik90/Auto-Claude.git
+
+<span class="comment"># Navigate to directory</span>
+<span class="command">cd</span> Auto-Claude
+
+<span class="comment"># Install all dependencies</span>
+<span class="command">npm run</span> install:all
+
+<span class="comment"># Start in development mode</span>
+<span class="command">npm run</span> dev
+
+<span class="comment"># Or build and run production</span>
+<span class="command">npm</span> start</code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section id="quickstart" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-4);">🚀</div>
+                <h2 class="section-title">Quick Start Guide</h2>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 0%;" id="progress"></div>
+                </div>
+                <div class="progress-steps">
+                    <span>Start</span>
+                    <span>Setup</span>
+                    <span>Auth</span>
+                    <span>Create</span>
+                    <span>Done!</span>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-1);">1</div>
+                <div class="step-content">
+                    <h3>Download & Install</h3>
+                    <p>Download the appropriate installer for your operating system from the releases page and run the installation wizard.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-2);">2</div>
+                <div class="step-content">
+                    <h3>Open Your Project</h3>
+                    <p>Launch Auto-Claude UI and open a folder containing a git-initialized repository. The app works within git worktrees to protect your main branch.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-3);">3</div>
+                <div class="step-content">
+                    <h3>Authenticate with Claude</h3>
+                    <p>Complete the OAuth authentication flow with your Claude Pro or Max account. This connects the AI agents to Anthropic's API.</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-4);">4</div>
+                <div class="step-content">
+                    <h3>Create Your First Task</h3>
+                    <p>Describe what you want to build in natural language. For example: "Create a REST API endpoint for user authentication with JWT tokens".</p>
+                </div>
+            </div>
+
+            <div class="card step-card">
+                <div class="step-number" style="background: var(--gradient-5);">5</div>
+                <div class="step-content">
+                    <h3>Watch the Magic Happen</h3>
+                    <p>Monitor autonomous agent progress in real-time through the Kanban board and agent terminals. Review changes when complete!</p>
+                </div>
+            </div>
+
+            <div class="tip-box success">
+                <span class="tip-icon">✅</span>
+                <div class="tip-content">
+                    <strong>You're All Set!</strong>
+                    The AI agents will plan, implement, and validate your code. You can run up to 12 parallel agent terminals for maximum productivity.
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-5);">✨</div>
+                <h2 class="section-title">Key Features</h2>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card highlight">
+                    <div class="feature-icon">🤖</div>
+                    <div class="feature-title">Autonomous Tasks</div>
+                    <div class="feature-desc">AI agents plan, implement, and validate code from simple task descriptions. No manual coding required.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">Parallel Execution</div>
+                    <div class="feature-desc">Run up to 12 simultaneous agent terminals for maximum productivity and faster builds.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-title">Isolated Workspaces</div>
+                    <div class="feature-desc">All changes occur in git worktrees, keeping your main branch protected until review.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title">Self-Validating QA</div>
+                    <div class="feature-desc">Built-in quality assurance ensures code is tested and validated before human review.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔀</div>
+                    <div class="feature-title">AI-Powered Merge</div>
+                    <div class="feature-desc">Automatic conflict resolution during integration saves time and prevents merge headaches.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">Memory Layer</div>
+                    <div class="feature-desc">Cross-session context retention means the AI remembers your project for improved builds.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <div class="feature-title">Kanban Board</div>
+                    <div class="feature-desc">Visual task management from planning through completion with drag-and-drop interface.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔗</div>
+                    <div class="feature-title">GitHub/GitLab Integration</div>
+                    <div class="feature-desc">Import issues directly and create merge requests without leaving the app.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuration Section -->
+        <section id="config" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-6);">⚙️</div>
+                <h2 class="section-title">Configuration</h2>
+            </div>
+
+            <div class="card">
+                <p style="margin-bottom: 1rem; color: var(--text-secondary);">Configure these environment variables in <code>apps/backend/.env</code></p>
+
+                <div style="overflow-x: auto;">
+                    <table class="config-table">
+                        <thead>
+                            <tr>
+                                <th>Variable</th>
+                                <th>Required</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">CLAUDE_CODE_OAUTH_TOKEN</span></td>
+                                <td data-label="Required"><span class="required yes">Required</span></td>
+                                <td data-label="Purpose">OAuth authentication token for Claude</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">GRAPHITI_ENABLED</span></td>
+                                <td data-label="Required"><span class="required no">Optional</span></td>
+                                <td data-label="Purpose">Enable memory/context retention features</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">AUTO_BUILD_MODEL</span></td>
+                                <td data-label="Required"><span class="required no">Optional</span></td>
+                                <td data-label="Purpose">Override the default Claude model</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">GITLAB_TOKEN</span></td>
+                                <td data-label="Required"><span class="required no">Optional</span></td>
+                                <td data-label="Purpose">GitLab authentication token</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">GITLAB_INSTANCE_URL</span></td>
+                                <td data-label="Required"><span class="required no">Optional</span></td>
+                                <td data-label="Purpose">Custom GitLab server (defaults to gitlab.com)</td>
+                            </tr>
+                            <tr>
+                                <td data-label="Variable"><span class="var-name">LINEAR_API_KEY</span></td>
+                                <td data-label="Required"><span class="required no">Optional</span></td>
+                                <td data-label="Purpose">Linear integration for task sync</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tip-box warning">
+                <span class="tip-icon">⚠️</span>
+                <div class="tip-content">
+                    <strong>Security Note</strong>
+                    Never commit your <code>.env</code> file to version control. Add it to your <code>.gitignore</code>.
+                </div>
+            </div>
+        </section>
+
+        <!-- CLI Section -->
+        <section id="cli" class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-1);">💻</div>
+                <h2 class="section-title">CLI Usage</h2>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem;">Headless / CI-CD Integration</h3>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;">Use these commands for automation pipelines and server environments:</p>
+
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code><span class="comment"># Interactive specification creation</span>
+<span class="command">python</span> spec_runner.py --interactive
+
+<span class="comment"># Run autonomous build from spec</span>
+<span class="command">python</span> run.py --spec 001
+
+<span class="comment"># Review generated changes</span>
+<span class="command">python</span> run.py --spec 001 --review
+
+<span class="comment"># Merge approved changes</span>
+<span class="command">python</span> run.py --spec 001 --merge</code>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom: 1rem;">Development Commands</h3>
+                <div class="code-block">
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                    <code><span class="command">npm run</span> install:all   <span class="comment"># Install dependencies</span>
+<span class="command">npm run</span> dev           <span class="comment"># Development mode</span>
+<span class="command">npm</span> start              <span class="comment"># Build & run</span>
+<span class="command">npm run</span> package       <span class="comment"># Create distributable</span>
+<span class="command">npm run</span> lint          <span class="comment"># Code linting</span>
+<span class="command">npm</span> test               <span class="comment"># Run tests</span>
+<span class="command">npm run</span> test:backend  <span class="comment"># Backend tests</span></code>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Section -->
+        <section class="animate-in">
+            <div class="section-header">
+                <div class="section-icon" style="background: var(--gradient-2);">🛡️</div>
+                <h2 class="section-title">Security Architecture</h2>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🖥️</div>
+                    <div class="feature-title">OS-Level Isolation</div>
+                    <div class="feature-desc">Command isolation via sandboxing prevents unauthorized system access.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📂</div>
+                    <div class="feature-title">Filesystem Restrictions</div>
+                    <div class="feature-desc">Access limited to project directories only - no system-wide file access.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">✅</div>
+                    <div class="feature-title">Dynamic Allowlisting</div>
+                    <div class="feature-desc">Commands are allowlisted based on your project's detected technology stack.</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <div class="feature-title">Verified Releases</div>
+                    <div class="feature-desc">All releases include SHA256 checksums and VirusTotal security scans.</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-links">
+            <a href="https://github.com/AndyMik90/Auto-Claude">GitHub</a>
+            <a href="https://github.com/AndyMik90/Auto-Claude/issues">Report Issues</a>
+            <a href="https://github.com/AndyMik90/Auto-Claude/discussions">Discussions</a>
+            <a href="https://discord.gg/auto-claude">Discord</a>
+        </div>
+        <p class="footer-copyright">
+            Licensed under AGPL-3.0 | Auto-Claude UI Quickstart Guide
+        </p>
+    </footer>
+
+    <script>
+        // Copy code functionality
+        function copyCode(btn) {
+            const codeBlock = btn.parentElement.querySelector('code');
+            const text = codeBlock.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
+            });
+        }
+
+        // Active nav tab on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navTabs = document.querySelectorAll('.nav-tab');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navTabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.getAttribute('href') === `#${current}`) {
+                    tab.classList.add('active');
+                }
+            });
+        });
+
+        // Animate progress bar on quickstart section view
+        const progressBar = document.getElementById('progress');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    let width = 0;
+                    const interval = setInterval(() => {
+                        if (width >= 100) {
+                            clearInterval(interval);
+                        } else {
+                            width += 2;
+                            progressBar.style.width = width + '%';
+                        }
+                    }, 30);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.getElementById('quickstart'));
+
+        // Smooth scroll for nav links
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = tab.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+
+        // Add animation on scroll
+        const animateElements = document.querySelectorAll('.animate-in');
+        const animateObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            animateObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

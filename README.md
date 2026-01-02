@@ -11,6 +11,10 @@ A high-performance power calculator that runs in the browser using WebAssembly. 
 - **Input Validation**: Name and number validation performed in WASM
 - **Copy to Clipboard**: Easily copy large results
 
+## Documentation
+
+- [Auto-Claude UI Quickstart Guide](quickstart.html) - Step-by-step setup and usage instructions
+
 ## Quick Start
 
 ### Prerequisites

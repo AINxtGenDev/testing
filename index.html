@@ -22,10 +22,17 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: relative;
         }
-        .logo {
+        .sidebar {
             position: absolute;
             top: 15px;
             left: 15px;
+            width: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo {
             width: 60px;
             height: 60px;
             object-fit: contain;
@@ -37,12 +44,12 @@
             100% { transform: rotateY(360deg); }
         }
         .group-photo {
-            position: absolute;
-            top: 85px;
-            left: 15px;
-            width: 280px;
+            width: 120px;
             border-radius: 6px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .main-content {
+            margin-left: 140px;
         }
         h1 {
             color: #333;
@@ -268,18 +275,21 @@
 </head>
 <body>
     <div class="container">
-        <img src="asset/00_logo.png" alt="Logo" class="logo">
-        <img src="asset/04_group4.png" alt="Group Photo" class="group-photo">
-        <h1>Power Calculator</h1>
-        <p class="authors">Manfred & Christian & Werner</p>
-        <p class="subtitle">Supports arbitrarily large numbers</p>
-
-        <div id="loading" class="loading">
-            Loading WebAssembly module...
+        <div class="sidebar">
+            <img src="asset/00_logo.png" alt="Logo" class="logo">
+            <img src="asset/04_group4.png" alt="Group Photo" class="group-photo">
         </div>
+        <div class="main-content">
+            <h1>Power Calculator</h1>
+            <p class="authors">Manfred & Christian & Werner</p>
+            <p class="subtitle">Supports arbitrarily large numbers</p>
 
-        <div id="app" style="display: none;">
-            <div class="status" id="status">WebAssembly module loaded</div>
+            <div id="loading" class="loading">
+                Loading WebAssembly module...
+            </div>
+
+            <div id="app" style="display: none;">
+                <div class="status" id="status">WebAssembly module loaded</div>
 
             <div class="form-group">
                 <label for="name">Your Name (letters only)</label>
@@ -324,6 +334,7 @@
                 <code onclick="setExample(200, 300)">200^300</code>
                 <code onclick="setExample(999, 999)">999^999</code>
             </div>
+        </div>
         </div>
     </div>
 

@@ -187,6 +187,19 @@
         .copy-btn:hover {
             background: #1976D2;
         }
+        .reset-btn {
+            background: #d32f2f;
+        }
+        .reset-btn:hover {
+            background: #b71c1c;
+        }
+        .button-group {
+            display: flex;
+            gap: 10px;
+        }
+        .button-group button {
+            flex: 1;
+        }
         .examples {
             margin-top: 20px;
             padding: 15px;
@@ -240,7 +253,10 @@
                 <div class="error-msg" id="exponentError">Please enter a non-negative integer</div>
             </div>
 
-            <button id="calculate" onclick="calculate()">Calculate</button>
+            <div class="button-group">
+                <button id="calculate" onclick="calculate()">Calculate</button>
+                <button class="reset-btn" onclick="resetForm()">Reset</button>
+            </div>
 
             <div class="computing" id="computing">
                 <span class="spinner"></span>
@@ -391,6 +407,26 @@
             ['nameError', 'baseError', 'exponentError'].forEach(id => {
                 document.getElementById(id).style.display = 'none';
             });
+        }
+
+        function resetForm() {
+            // Clear all input fields
+            document.getElementById('name').value = '';
+            document.getElementById('base').value = '';
+            document.getElementById('exponent').value = '';
+
+            // Clear any errors
+            clearErrors();
+
+            // Hide result and computing indicator
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('computing').style.display = 'none';
+
+            // Reset stored result
+            lastResult = '';
+
+            // Focus on name field
+            document.getElementById('name').focus();
         }
 
         // Add enter key support

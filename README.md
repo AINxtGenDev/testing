@@ -10,6 +10,8 @@ A high-performance power calculator that runs in the browser using WebAssembly. 
 - **Browser-Based**: No server-side computation required
 - **Input Validation**: Name and number validation performed in WASM
 - **Copy to Clipboard**: Easily copy large results
+- **Mobile-First Design**: Fully responsive for all devices (phones, tablets, desktops)
+- **Interactive Video**: Click the group photo to watch the team video
 
 ## What is WebAssembly?
 
@@ -100,14 +102,19 @@ cd ..
 ## Project Structure
 
 ```
+├── index.html            # Browser interface (responsive, mobile-first)
 ├── power_calc_wasm.cpp   # C++ source with BigInt implementation
 ├── power_calc.js         # Emscripten-generated JavaScript glue
 ├── power_calc.wasm       # Compiled WebAssembly binary
-├── index.html            # Browser interface
 ├── server.py             # Python HTTP server with WASM MIME types
 ├── build_wasm.sh         # Build script for recompiling WASM
 ├── power_calc.cpp        # Original CLI version (C++)
-└── SKILL.md              # Development skill reference
+├── SKILL.md              # Development skill reference
+├── README.md             # This documentation
+└── asset/
+    ├── 00_logo.png       # Rotating logo animation
+    ├── 04_group4.png     # Team group photo (clickable)
+    └── 05_group2.mp4     # Team video (plays on photo click)
 ```
 
 ## Technical Details
@@ -136,6 +143,58 @@ The C++ code includes a custom `BigInt` class that:
 | 10^100 | 101 | Googol |
 | 200^300 | 690 | Large calculation |
 | 999^999 | 2,997 | Very large calculation |
+
+## Responsive Design
+
+The application uses a **mobile-first** approach, ensuring optimal user experience across all devices.
+
+### Supported Devices
+
+| Device Type | Screen Size | Layout |
+|-------------|-------------|--------|
+| Mobile (iPhone, Android) | < 576px | Stacked layout, horizontal logo & photo |
+| Small Tablet | 576px - 767px | Centered container, larger elements |
+| Tablet (iPad) | 768px - 991px | Sidebar layout activates |
+| Desktop | 992px - 1199px | Full sidebar, wider container |
+| Large Desktop | ≥ 1200px | Maximum width container |
+
+### Responsive Breakpoints
+
+```css
+/* Mobile First (default) */
+/* Small tablets */    @media (min-width: 576px)
+/* Tablets */          @media (min-width: 768px)
+/* Desktop */          @media (min-width: 992px)
+/* Large Desktop */    @media (min-width: 1200px)
+/* Mobile Landscape */ @media (max-width: 767px) and (orientation: landscape)
+```
+
+### Mobile Optimizations
+
+- **Touch-Friendly**: All buttons minimum 48px height for easy tapping
+- **iOS Zoom Prevention**: Input fields use 16px font to prevent auto-zoom
+- **Touch Callout Disabled**: Prevents long-press context menus on images
+- **Smooth Scrolling**: Native touch scrolling for result overflow areas
+- **Responsive Video Modal**: Full-width on mobile, scaled on larger screens
+
+### Accessibility Features
+
+| Feature | Description |
+|---------|-------------|
+| `prefers-reduced-motion` | Disables animations for users who prefer reduced motion |
+| `prefers-contrast: high` | Enhanced borders and contrast for visibility |
+| `focus-visible` | Clear focus indicators for keyboard navigation |
+| Touch targets | Minimum 44px touch targets per WCAG guidelines |
+
+## Interactive Features
+
+### Video Modal
+
+Click on the **group photo** in the sidebar to watch the team video:
+- Automatically plays when opened
+- Close via × button, clicking outside, or pressing Escape
+- Pauses and resets when closed
+- Responsive sizing for all screen sizes
 
 ## Development
 

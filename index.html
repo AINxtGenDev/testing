@@ -20,6 +20,15 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .logo {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
         }
         h1 {
             color: #333;
@@ -251,6 +260,7 @@
 </head>
 <body>
     <div class="container">
+        <img src="asset/00_logo.png" alt="Logo" class="logo">
         <h1>Power Calculator</h1>
         <p class="authors">Manfred & Christian & Werner</p>
         <p class="subtitle">Supports arbitrarily large numbers</p>

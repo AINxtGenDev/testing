@@ -11,6 +11,54 @@ A high-performance power calculator that runs in the browser using WebAssembly. 
 - **Input Validation**: Name and number validation performed in WASM
 - **Copy to Clipboard**: Easily copy large results
 
+## What is WebAssembly?
+
+WebAssembly (WASM) is a binary instruction format that allows you to run code written in languages like C, C++, or Rust directly in the browser at near-native speed.
+
+### How It Works: From C++ to Browser
+
+```
+┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+│   C++ Source    │ ──── │   Emscripten    │ ──── │   .wasm + .js   │
+│  power_calc.cpp │      │    Compiler     │      │  Browser-ready  │
+└─────────────────┘      └─────────────────┘      └─────────────────┘
+```
+
+1. **Write C++ Code**: Create your application logic in C++ (e.g., `power_calc.cpp`)
+2. **Compile with Emscripten**: Use `emcc` to compile C++ to WebAssembly binary (`.wasm`) and JavaScript glue code (`.js`)
+3. **Run in Browser**: The browser loads the WASM module and JavaScript can call your C++ functions
+
+### Why Use WebAssembly?
+
+| Benefit | Description |
+|---------|-------------|
+| **Performance** | Runs at near-native speed (much faster than JavaScript for compute-heavy tasks) |
+| **Code Reuse** | Use existing C/C++ libraries in the browser without rewriting |
+| **Portability** | Same code runs on any modern browser (Chrome, Firefox, Safari, Edge) |
+| **Security** | Runs in a sandboxed environment, same as JavaScript |
+
+### This Project's Workflow
+
+```
+power_calc.cpp (C++ CLI app)
+        │
+        ▼
+power_calc_wasm.cpp (Modified for WASM exports)
+        │
+        ▼ [emcc compiler]
+        │
+   ┌────┴────┐
+   ▼         ▼
+.wasm     .js (glue)
+   │         │
+   └────┬────┘
+        ▼
+   index.html (calls C++ functions via JavaScript)
+        │
+        ▼
+   Browser (runs C++ at near-native speed)
+```
+
 ## Documentation
 
 - [Auto-Claude UI Quickstart Guide](quickstart.html) - Step-by-step setup and usage instructions

@@ -15,7 +15,13 @@ You are a **Full Stack Software Developer** and **Security Master** specializing
 
 ## Project Context
 
-- **GitHub Repository**: https://github.com/AINxtGenDev/testing
+### Repositories
+
+| Platform   | URL                                                    | Remote Name |
+|------------|--------------------------------------------------------|-------------|
+| GitHub     | https://github.com/AINxtGenDev/testing                 | origin      |
+| Bitbucket  | https://bitbucket.org/wpltesting/wasm-powercalc        | bitbucket   |
+
 - **SSH Key**: `/home/werner/.ssh/github_werner`
 
 ### Git Configuration
@@ -23,6 +29,30 @@ You are a **Full Stack Software Developer** and **Security Master** specializing
 When performing git operations, use:
 ```bash
 GIT_SSH_COMMAND="ssh -i /home/werner/.ssh/github_werner -o IdentitiesOnly=yes" git <command>
+```
+
+### Syncing to Both Remotes (GitHub & Bitbucket)
+
+**Push to both remotes:**
+```bash
+git push origin main && git push bitbucket main
+```
+
+**Push with tags to both:**
+```bash
+git push origin main --tags && git push bitbucket main --tags
+```
+
+**One-liner for full sync:**
+```bash
+git push origin --all && git push origin --tags && git push bitbucket --all && git push bitbucket --tags
+```
+
+### Adding Bitbucket Remote (First-time Setup)
+
+If the bitbucket remote doesn't exist yet:
+```bash
+git remote add bitbucket git@bitbucket.org:wpltesting/wasm-powercalc.git
 ```
 
 ## Development Process Responsibilities
@@ -147,9 +177,16 @@ jobs:
 # Clone
 GIT_SSH_COMMAND="ssh -i /home/werner/.ssh/github_werner -o IdentitiesOnly=yes" git clone git@github.com:AINxtGenDev/testing.git
 
-# Push/Pull
+# Push/Pull (GitHub)
 GIT_SSH_COMMAND="ssh -i /home/werner/.ssh/github_werner -o IdentitiesOnly=yes" git push origin main
 GIT_SSH_COMMAND="ssh -i /home/werner/.ssh/github_werner -o IdentitiesOnly=yes" git pull origin main
+
+# Push/Pull (Bitbucket)
+git push bitbucket main
+git pull bitbucket main
+
+# Sync to Both Remotes
+git push origin main && git push bitbucket main
 ```
 
 ### Emscripten Build

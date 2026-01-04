@@ -7,6 +7,35 @@ Authors: Manfred & Christian & Werner
 Technology: WebAssembly (C++ compiled to WASM via Emscripten)
 
 ================================================================================
+                      HOW IT WORKS: FROM C++ TO BROWSER
+================================================================================
+
+┌─────────────────┐      ┌─────────────────┐      ┌─────────────────┐
+│   C++ Source    │ ──── │   Emscripten    │ ──── │   .wasm + .js   │
+│  power_calc.cpp │      │    Compiler     │      │  Browser-ready  │
+└─────────────────┘      └─────────────────┘      └─────────────────┘
+
+1. WRITE C++ CODE
+   Create your application logic in C++ (e.g., power_calc.cpp)
+   - Implement BigInt class for arbitrary precision arithmetic
+   - Define functions for validation and calculation
+   - Export functions for JavaScript to call
+
+2. COMPILE WITH EMSCRIPTEN
+   Use emcc to compile C++ to WebAssembly binary (.wasm) and JavaScript
+   glue code (.js)
+   - Command: emcc power_calc.cpp -o power_calc.js -s WASM=1
+   - Generates: power_calc.wasm (binary) + power_calc.js (glue code)
+   - Optimized with -O3 for maximum performance
+
+3. RUN IN BROWSER
+   The browser loads the WASM module and JavaScript can call your C++
+   functions directly
+   - HTML loads power_calc.js which fetches power_calc.wasm
+   - JavaScript calls C++ functions: Module._calculateBigPower(base, exp)
+   - Results returned to JavaScript for display in the UI
+
+================================================================================
                               WHAT IT DOES
 ================================================================================
 

@@ -96,3 +96,19 @@ Set up GitHub Actions (CI build on push/PR)
 4) Verify the run in GitHub:
    - Open your repo on GitHub
    - Go to the Actions tab and confirm the CI workflow is green
+
+Publish to GitHub Pages (run on https://ainxtgendev.github.io/testing/)
+1) Ensure GitHub Pages is enabled:
+   - Repo Settings -> Pages -> Source: "GitHub Actions"
+2) The deploy workflow builds WASM before publishing:
+   - Installs Emscripten
+   - Runs ./build_wasm.sh
+   - Uploads the site as a Pages artifact
+3) Ensure .nojekyll exists in the repo root (needed for .wasm files)
+4) Push to main:
+   git add .github/workflows/deploy.yml .nojekyll
+   git commit -m "Build WASM for Pages deploy"
+   git push
+5) Verify deployment:
+   - GitHub -> Actions -> "Deploy to GitHub Pages" is green
+   - Visit https://ainxtgendev.github.io/testing/

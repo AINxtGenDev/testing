@@ -49,3 +49,50 @@ Run locally and test in browser
 Tip: find your local IP address
 - Linux: ip addr | rg "inet "
 - macOS: ifconfig | rg "inet "
+
+After local testing: push to GitHub and use GitHub Actions
+1) Check status and commit your changes:
+   git status
+   git add -A
+   git commit -m "Build WASM example"
+2) Ensure the branch is main (optional if already on main):
+   git branch -M main
+3) Add the GitHub remote if needed:
+   git remote add origin git@github.com:AINxtGenDev/testing.git
+4) Push to GitHub:
+   git push -u origin main
+   - If you must use the configured SSH key:
+     GIT_SSH_COMMAND="ssh -i /home/werner/.ssh/github_werner -o IdentitiesOnly=yes" git push -u origin main
+
+Set up GitHub Actions (CI build on push/PR)
+1) Create a workflow file at .github/workflows/ci.yml
+2) Example workflow (installs Emscripten and builds):
+   name: CI
+   on:
+     push:
+       branches: [main]
+     pull_request:
+       branches: [main]
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v4
+         - name: Install Emscripten
+           run: |
+             git clone https://github.com/emscripten-core/emsdk.git
+             cd emsdk
+             ./emsdk install latest
+             ./emsdk activate latest
+             echo "$(pwd)" >> $GITHUB_PATH
+         - name: Build
+           run: |
+             source ./emsdk/emsdk_env.sh
+             em++ power_calc.cpp -O2 -s WASM=1 -o index.html
+3) Commit and push the workflow:
+   git add .github/workflows/ci.yml
+   git commit -m "Add GitHub Actions CI build"
+   git push
+4) Verify the run in GitHub:
+   - Open your repo on GitHub
+   - Go to the Actions tab and confirm the CI workflow is green

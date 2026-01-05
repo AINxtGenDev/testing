@@ -1,0 +1,51 @@
+First steps with Emscripten (Linux + macOS)
+==========================================
+
+Websites
+- Emscripten main site: https://emscripten.org/
+- Getting started / downloads: https://emscripten.org/docs/getting_started/downloads.html
+
+Prerequisites
+1) Linux: install packages for build tools (git, python3, cmake, make, clang).
+   - Example (Debian/Ubuntu):
+     sudo apt-get update
+     sudo apt-get install -y git python3 cmake make clang
+2) macOS: install Xcode Command Line Tools (clang, make, git, etc).
+   - Run: xcode-select --install
+
+Install Emscripten (Linux or macOS)
+1) Get the SDK:
+   git clone https://github.com/emscripten-core/emsdk.git
+   cd emsdk
+2) Install and activate the latest SDK:
+   ./emsdk install latest
+   ./emsdk activate latest
+3) Load the environment in your current shell:
+   source ./emsdk_env.sh
+4) Verify:
+   emcc --version
+   em++ --version
+
+Note: Step 3 must be run in each new shell, or add it to your shell profile.
+
+Build your existing C++ file to WebAssembly
+1) Example (replace main.cpp with your file):
+   em++ main.cpp -O2 -s WASM=1 -o index.html
+2) Outputs:
+   - index.html
+   - index.js
+   - index.wasm
+
+Run locally and test in browser
+1) Start a simple HTTP server in the output directory:
+   python3 -m http.server 8000
+2) Open the page locally:
+   http://localhost:8000/index.html
+3) Open the page from another device on your LAN:
+   http://local-ip-address:8000/index.html
+   Example:
+   http://192.168.1.15:8000/index.html
+
+Tip: find your local IP address
+- Linux: ip addr | rg "inet "
+- macOS: ifconfig | rg "inet "
